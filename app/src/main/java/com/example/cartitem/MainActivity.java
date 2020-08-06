@@ -27,13 +27,8 @@ public class MainActivity extends AppCompatActivity implements CustomOnClickList
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerViewBookScreen);
         databaseHelper = new DatabaseHelper(this);
-        initInsert();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        cartItemAdapter = new CartItemAdapter(databaseHelper.getAllCardItem(), this, this);
-        recyclerView.setAdapter(cartItemAdapter);
-        recyclerView.setHasFixedSize(false);
         viewCart = findViewById(R.id.view_cart_items);
-        viewCart.setText("VIEW CART");
+        initInsert();
         viewCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements CustomOnClickList
     protected void onResume() {
         super.onResume();
         getWindow().getDecorView().setSystemUiVisibility(flags);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cartItemAdapter = new CartItemAdapter(databaseHelper.getAllCardItem(), this, this,0);
+        recyclerView.setAdapter(cartItemAdapter);
+        recyclerView.setHasFixedSize(false);
         int count = databaseHelper.getTotalCount();
         if (count != 0)
             viewCart.setText("VIEW CART(" + count + " ITEMS )");

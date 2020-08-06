@@ -36,7 +36,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         recyclerView = findViewById(R.id.recyclerViewReviewOrder);
         showmore = findViewById(R.id.show_more);
         showmore.setOnClickListener(this);
-        adapter = new CartItemAdapter(databaseHelper.getAllCardItem(index), this, this);
+        adapter = new CartItemAdapter(databaseHelper.getAllCardItem(index), this, this,1);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);

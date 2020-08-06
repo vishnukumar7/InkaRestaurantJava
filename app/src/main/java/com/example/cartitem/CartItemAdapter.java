@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -18,11 +19,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Custom
     private CustomOnClickListner customOnClickListner;
     private DatabaseHelper databaseHelper;
     private int position;
+    private int type;
 
-    public CartItemAdapter(List<CartItem> cartItemList, CustomOnClickListner customOnClickListner, Context context) {
+    public CartItemAdapter(List<CartItem> cartItemList, CustomOnClickListner customOnClickListner, Context context,int type) {
         this.cartItemList = cartItemList;
         databaseHelper=new DatabaseHelper(context);
         this.customOnClickListner = customOnClickListner;
+        this.type=type;
     }
 
     public int getPosition() {
@@ -43,6 +46,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Custom
     public void onBindViewHolder(@NonNull final CustomViewHolder holder, int position) {
         final CartItem cartItem = cartItemList.get(position);
         buttonView(holder,cartItem.getName());
+        if(type==1)
+            holder.message.setVisibility(View.VISIBLE);
+        else
+            holder.message.setVisibility(View.GONE);
         this.position=position;
        // holder.count.setText("" + cartItem.getCount());
         holder.description.setText(cartItem.getDescription());
@@ -94,6 +101,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Custom
     static class CustomViewHolder extends RecyclerView.ViewHolder {
         AppCompatTextView name, description, price, count;
         AppCompatButton add, sub;
+        ImageView message;
 
         CustomViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -101,7 +109,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Custom
             description = itemView.findViewById(R.id.card_text_description);
             price = itemView.findViewById(R.id.card_text_price);
             count = itemView.findViewById(R.id.card_text_count);
-
+            message=itemView.findViewById(R.id.message);
             add = itemView.findViewById(R.id.card_text_add);
             sub = itemView.findViewById(R.id.card_text_sub);
         }
